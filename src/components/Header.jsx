@@ -1,17 +1,30 @@
 import React from "react";
 import { MdShoppingBasket } from "react-icons/md";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from "../firebase.config";
 
 import Logo from "../img/logo.png";
 import Avatar from "../img/avatar.png";
 
 const Header = () => {
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const login = async () => {
+    const response = await signInWithPopup(firebaseAuth, provider);
+    console.log(response);
+  };
+
   return (
     <header className="fixed z-50 w-screen p-6 px-16">
       <div className="flex h-full w-full justify-between">
-        <div className="flex items-center gap-2">
+        <Link to={"/"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="logo" />
           <p className="text-xl font-bold text-neutral-800">City</p>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-8">
           <ul className="flex items-center gap-8">
@@ -35,7 +48,16 @@ const Header = () => {
               <p className="text-xs font-semibold text-white">2</p>
             </div>
           </div>
-          <img src={Avatar} className="w-10 h-10 drop-shadow-xl" alt="userprofile"></img>
+
+          <div className="relative">
+            <motion.img
+              whileTap={{ scale: 0.6 }}
+              src={Avatar}
+              className="h-10 w-10 cursor-pointer drop-shadow-xl"
+              alt="userprofile"
+              onClick={login}
+            />
+          </div>
         </div>
       </div>
     </header>
