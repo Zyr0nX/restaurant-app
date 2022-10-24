@@ -5,7 +5,7 @@ import { Header, MainContainer, CreateContainer } from "./components";
 
 function App() {
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <div className="flex h-auto w-screen bg-neutral-200">
         <Header />
 

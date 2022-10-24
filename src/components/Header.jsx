@@ -1,5 +1,5 @@
-import React from "react";
-import { MdShoppingBasket } from "react-icons/md";
+import React, { useState } from "react";
+import { MdShoppingBasket, MdAdd, MdLogin, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -17,15 +17,22 @@ const Header = () => {
 
   const [{ user }, dispatch] = useStateValue();
 
+  const [isMenu, setIsMenu] = useState(false);
+
   const login = async () => {
-    const {
-      user: { refreshToken, providerData },
-    } = await signInWithPopup(firebaseAuth, provider);
-    console.log(user);
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    });
+    if (!user) {
+      const {
+        user: { refreshToken, providerData },
+      } = await signInWithPopup(firebaseAuth, provider);
+      dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0],
+      });
+      localStorage.setItem("user", JSON.stringify(providerData[0]));
+    }
+    else{
+      setIsMenu(!isMenu);
+    }
   };
   return (
     <header className="fixed z-50 w-screen p-6 px-16">
@@ -62,10 +69,25 @@ const Header = () => {
             <motion.img
               whileTap={{ scale: 0.6 }}
               src={user ? user.photoURL : Avatar}
-              className="h-10 w-10 cursor-pointer drop-shadow-xl"
+              className="h-10 w-10 cursor-pointer rounded-full drop-shadow-xl"
               alt="userprofile"
               onClick={login}
             />
+            {isMenu && (
+              <motion.div initial={{opacity : 0, scale: 0.6}} animate={{opacity : 1, scale: 1}} exit={{opacity : 0, scale: 0.6}} className="absolute top-12 right-0 flex w-40 flex-col rounded-lg bg-neutral-50">
+                {user && user.email === "duydh2000@gmail.com" && (
+                  <Link to="/createItem">
+                    <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300">
+                      New Item <MdAdd />
+                    </p>
+                  </Link>
+                )}
+
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300">
+                  Log out <MdLogout />
+                </p>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
