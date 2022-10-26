@@ -29,21 +29,36 @@ const Header = () => {
         user: providerData[0],
       });
       localStorage.setItem("user", JSON.stringify(providerData[0]));
-    }
-    else{
+    } else {
       setIsMenu(!isMenu);
     }
   };
+
+  const logout = () => {
+    setIsMenu(false)
+    localStorage.clear()
+
+    dispatch({
+      type: actionType.SET_USER,
+      user: null 
+    }
+    )
+  }
   return (
-    <header className="fixed z-50 w-screen p-6 px-16">
-      <div className="flex h-full w-full justify-between">
+    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16">
+      <div className="flex h-full w-full items-center justify-between md:items-stretch">
         <Link to={"/"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="logo" />
           <p className="text-xl font-bold text-neutral-800">City</p>
         </Link>
 
-        <div className="flex items-center gap-8">
-          <ul className="flex items-center gap-8">
+        <div className="flex items-center gap-8 md:flex">
+          <motion.ul
+            initial={{ opacity: 0, x: 200 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 200 }}
+            className="hidden items-center gap-8 md:flex"
+          >
             <li className="cursor-pointer text-base transition-all duration-100 ease-in-out hover:text-neutral-800">
               Home
             </li>
@@ -56,7 +71,7 @@ const Header = () => {
             <li className="cursor-pointer text-base transition-all duration-100 ease-in-out hover:text-neutral-800">
               Service
             </li>
-          </ul>
+          </motion.ul>
 
           <div className="relative flex items-center justify-center">
             <MdShoppingBasket className="cursor-pointer text-2xl text-neutral-600" />
@@ -74,16 +89,32 @@ const Header = () => {
               onClick={login}
             />
             {isMenu && (
-              <motion.div initial={{opacity : 0, scale: 0.6}} animate={{opacity : 1, scale: 1}} exit={{opacity : 0, scale: 0.6}} className="absolute top-12 right-0 flex w-40 flex-col rounded-lg bg-neutral-50">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                className="absolute top-12 right-0 flex w-40 flex-col rounded-lg bg-neutral-50"
+              >
                 {user && user.email === "duydh2000@gmail.com" && (
                   <Link to="/createItem">
-                    <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300">
+                    <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-neutral-300">
                       New Item <MdAdd />
                     </p>
                   </Link>
                 )}
-
-                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300">
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-neutral-300 md:hidden">
+                  Home
+                </p>
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-neutral-300 md:hidden">
+                  Menu
+                </p>
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-neutral-300 md:hidden">
+                  About us
+                </p>
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-neutral-300 md:hidden">
+                  Service
+                </p>
+                <p className="flex cursor-pointer items-center gap-3 px-4 py-2 text-neutral-800 transition-all rounded-lg duration-100 ease-in-out hover:bg-red-500 hover:text-neutral-50" onClick={logout}>
                   Log out <MdLogout />
                 </p>
               </motion.div>
