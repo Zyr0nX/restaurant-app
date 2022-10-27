@@ -9,7 +9,7 @@ function App() {
       <div className="flex h-auto w-screen bg-neutral-200">
         <Header />
 
-        <main className="mt-24 w-full p-8">
+        <main className="mt-14 w-full p-8 px-4 py-4 md:mt-20 md:px-16">
           <Routes>
             <Route path="/*" element={<MainContainer />} />
             <Route path="/createItem" element={<CreateContainer />} />
