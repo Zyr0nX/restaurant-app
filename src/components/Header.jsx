@@ -50,11 +50,11 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16">
+    <header className="fixed z-50 w-screen p-3 px-4 md:p-2 md:px-16 bg-sky-600">
       <div className="flex h-full w-full items-center justify-between md:items-stretch">
         <Link to={"/"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="logo" />
-          <p className="text-xl font-bold text-neutral-800">City</p>
+          <p className="text-xl font-bold text-neutral-100">Restaurant</p>
         </Link>
 
         <div className="flex items-center gap-8 md:flex">
@@ -68,7 +68,7 @@ const Header = () => {
               {navItems.map((navItem, key) => {
                 return (
                   <li
-                    className="cursor-pointer text-base transition-all duration-100 ease-in-out hover:text-neutral-800"
+                    className="cursor-pointer text-base transition-all duration-100 ease-in-out text-neutral-100"
                     key={key}
                   >
                     {navItem}
@@ -79,7 +79,7 @@ const Header = () => {
           )}
 
           <div className="relative flex items-center justify-center">
-            <MdShoppingBasket className="cursor-pointer text-2xl text-neutral-600" />
+            <MdShoppingBasket className="cursor-pointer text-2xl text-neutral-100" />
             <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 ">
               <p className="text-xs font-semibold text-white">2</p>
             </div>
