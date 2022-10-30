@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-2 md:px-16 bg-sky-600">
+    <header className="fixed z-50 w-screen bg-sky-500 p-3 px-4 drop-shadow-2xl md:p-2 md:px-16">
       <div className="flex h-full w-full items-center justify-between md:items-stretch">
         <Link to={"/"} className="flex items-center gap-2">
           <img src={Logo} className="w-8 object-cover" alt="logo" />
@@ -68,7 +68,7 @@ const Header = () => {
               {navItems.map((navItem, key) => {
                 return (
                   <li
-                    className="cursor-pointer text-base transition-all duration-100 ease-in-out text-neutral-100"
+                    className="cursor-pointer text-base text-neutral-100 transition-all duration-100 ease-in-out"
                     key={key}
                   >
                     {navItem}
@@ -102,7 +102,10 @@ const Header = () => {
               >
                 {user && user.email === "duydh2000@gmail.com" && (
                   <Link to="/createItem">
-                    <p className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300">
+                    <p
+                      className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300"
+                      onClick={() => setIsMenu(false)}
+                    >
                       New Item <MdAdd />
                     </p>
                   </Link>
@@ -112,6 +115,7 @@ const Header = () => {
                     return (
                       <p
                         className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300"
+                        onClick={() => setIsMenu(false)}
                         key={key}
                       >
                         {navItem}
