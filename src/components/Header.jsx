@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { MdShoppingBasket, MdAdd, MdLogin, MdLogout } from "react-icons/md";
+import { MdShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { app } from "../firebase.config";
+import { app } from "../utils/firebase";
 
 import Logo from "../img/logo.png";
 import Avatar from "../img/avatar.png";
@@ -50,25 +50,25 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed z-50 w-screen bg-sky-500 p-3 px-4 drop-shadow-2xl md:p-2 md:px-16">
-      <div className="flex h-full w-full items-center justify-between md:items-stretch">
-        <Link to={"/"} className="flex items-center gap-2">
-          <img src={Logo} className="w-8 object-cover" alt="logo" />
-          <p className="text-xl font-bold text-neutral-100">Restaurant</p>
+    <header className='fixed z-50 w-screen bg-sky-500 p-3 px-4 drop-shadow-2xl md:p-2 md:px-16'>
+      <div className='flex h-full w-full items-center justify-between md:items-stretch'>
+        <Link to={"/"} className='flex items-center gap-2'>
+          <img src={Logo} className='w-8 object-cover' alt='logo' />
+          <p className='text-xl font-bold text-neutral-100'>Restaurant</p>
         </Link>
 
-        <div className="flex items-center gap-8 md:flex">
+        <div className='flex items-center gap-8 md:flex'>
           {width > 640 && (
             <motion.ul
               initial={{ opacity: 0, x: 200 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 200 }}
-              className="flex items-center gap-8"
+              className='flex items-center gap-8'
             >
               {navItems.map((navItem, key) => {
                 return (
                   <li
-                    className="cursor-pointer text-base text-neutral-100 transition-all duration-100 ease-in-out"
+                    className='cursor-pointer text-base text-neutral-100 transition-all duration-100 ease-in-out'
                     key={key}
                   >
                     {navItem}
@@ -78,19 +78,19 @@ const Header = () => {
             </motion.ul>
           )}
 
-          <div className="relative flex items-center justify-center">
-            <MdShoppingBasket className="cursor-pointer text-2xl text-neutral-100" />
-            <div className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 ">
-              <p className="text-xs font-semibold text-white">2</p>
+          <div className='relative flex items-center justify-center'>
+            <MdShoppingBasket className='cursor-pointer text-2xl text-neutral-100' />
+            <div className='absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 '>
+              <p className='text-xs font-semibold text-white'>2</p>
             </div>
           </div>
 
-          <div className="relative">
+          <div className='relative'>
             <motion.img
               whileTap={{ scale: 0.6 }}
               src={user ? user.photoURL : Avatar}
-              className="h-10 w-10 cursor-pointer rounded-full drop-shadow-xl"
-              alt="userprofile"
+              className='h-10 w-10 cursor-pointer rounded-full drop-shadow-xl'
+              alt='userprofile'
               onClick={login}
             />
             {isMenu && (
@@ -98,12 +98,12 @@ const Header = () => {
                 initial={{ opacity: 0, scale: 0.6 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.6 }}
-                className="absolute top-12 right-0 flex w-40 flex-col rounded-lg bg-neutral-50"
+                className='absolute top-12 right-0 flex w-40 flex-col rounded-lg bg-neutral-50'
               >
                 {user && user.email === "duydh2000@gmail.com" && (
-                  <Link to="/createItem">
+                  <Link to='/createItem'>
                     <p
-                      className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300"
+                      className='flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300'
                       onClick={() => setIsMenu(false)}
                     >
                       New Item <MdAdd />
@@ -114,7 +114,7 @@ const Header = () => {
                   navItems.map((navItem, key) => {
                     return (
                       <p
-                        className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300"
+                        className='flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-neutral-300'
                         onClick={() => setIsMenu(false)}
                         key={key}
                       >
@@ -123,7 +123,7 @@ const Header = () => {
                     );
                   })}
                 <p
-                  className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-red-500 hover:text-neutral-50"
+                  className='flex cursor-pointer items-center gap-3 rounded-lg px-4 py-2 text-neutral-800 transition-all duration-100 ease-in-out hover:bg-red-500 hover:text-neutral-50'
                   onClick={logout}
                 >
                   Log out <MdLogout />

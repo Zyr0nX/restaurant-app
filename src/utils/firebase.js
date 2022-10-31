@@ -1,6 +1,7 @@
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,9 +13,16 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
 const firestore = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
-export { app, firestore, storage };
+const firebaseUIConfig = {
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+};
+
+export { app, firestore, storage, auth, firebaseUIConfig };
