@@ -2,6 +2,8 @@ import { React } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Header, Register, MainContainer, CreateContainer } from "./components";
+import { AuthContext } from "./components/Auth";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
   return (

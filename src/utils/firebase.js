@@ -1,4 +1,4 @@
-import { getAuth } from "firebase/auth";
+import { EmailAuthCredential, getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import firebase from 'firebase/compat/app';
@@ -20,9 +20,13 @@ const storage = getStorage(app);
 const auth = getAuth(app);
 
 const firebaseUIConfig = {
-  signInFlow: "popup",
   signInSuccessUrl: "/",
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  signInOptions: [new GoogleAuthProvider().providerId, new EmailAuthCredential().providerId],
+  tosUrl: '/',
+  privacyPolicyUrl: function () {
+    window.location.assign('/');
+  }
 };
+
 
 export { app, firestore, storage, auth, firebaseUIConfig };
