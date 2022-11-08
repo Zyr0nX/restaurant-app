@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import "firebaseui/dist/firebaseui.css";
 import {
-  FacebookAuthProvider,
   getAuth,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+  signOut,
 } from "firebase/auth";
 import { app } from "../utils/firebase";
 import { useStateValue } from "../context/StateProvider";
-import { actionType } from "../context/reducer";
 import { FcGoogle } from "react-icons/fc";
-import { GrFacebook } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
-const Register = () => {
+const SignIn = () => {
   const firebaseAuth = getAuth(app);
   const [{ user }, dispatch] = useStateValue();
 
@@ -21,40 +22,13 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const loginWithPassword = async () => {
-    console.log(email, password);
-    const {
-      user: { refreshToken, providerData },
-    } = await signInWithEmailAndPassword(firebaseAuth, email, password);
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    });
-    console.log(providerData);
-    localStorage.setItem("user", JSON.stringify(providerData[0]));
+    await signInWithEmailAndPassword(firebaseAuth, email, password);
+    await setPersistence(firebaseAuth, browserLocalPersistence);
   };
 
   const loginWithGoogle = async () => {
-    const {
-      user: { refreshToken, providerData },
-    } = await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    });
-    console.log(providerData);
-    localStorage.setItem("user", JSON.stringify(providerData[0]));
-  };
-
-  const loginWithFacebook = async () => {
-    const {
-      user: { refreshToken, providerData },
-    } = await signInWithPopup(firebaseAuth, new FacebookAuthProvider());
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    });
-    console.log(providerData);
-    localStorage.setItem("user", JSON.stringify(providerData[0]));
+    await signInWithPopup(firebaseAuth, new GoogleAuthProvider());
+    await setPersistence(firebaseAuth, browserLocalPersistence);
   };
 
   return (
@@ -97,6 +71,7 @@ const Register = () => {
           </a> */}
           <div className='mt-6'>
             <button
+              type='button'
               className='w-full transform rounded-md bg-purple-700 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-purple-600 focus:bg-purple-600 focus:outline-none'
               onClick={loginWithPassword}
             >
@@ -120,13 +95,16 @@ const Register = () => {
         <p className='mt-8 text-center text-xs font-light text-gray-700'>
           {" "}
           Don't have an account?{" "}
-          <a href='#' className='font-medium text-purple-600 hover:underline'>
+          <Link
+            to='/signup'
+            className='font-medium text-purple-600 hover:underline'
+          >
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default SignIn;
