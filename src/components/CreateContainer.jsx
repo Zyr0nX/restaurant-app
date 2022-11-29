@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-import { MdFastfood } from "react-icons/md";
+import { MdCloudUpload, MdFastfood } from "react-icons/md";
 import { categories } from "../utils/data";
 import Loader from "./Loader";
 
@@ -14,7 +14,9 @@ const CreateContainer = () => {
   const [fields, setFields] = useState(true);
   const [alertStatus, setAlertStatus] = useState("danger");
   const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const uploadImage = () => {};
 
   return (
     <div className="flex h-auto min-h-screen w-full items-center justify-center">
@@ -68,7 +70,33 @@ const CreateContainer = () => {
         </div>
 
         <div className="group flex h-40 w-full flex-col items-center justify-center rounded-lg border-2 border-dotted border-gray-300">
-          {isLoading && <Loader />}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {!image ? (
+                <label className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
+                  <div className="flex h-full w-full flex-col items-center justify-center">
+                    <MdCloudUpload className="text-3xl text-gray-500 hover:text-gray-700"></MdCloudUpload>
+                    <p className="text-gray-500 hover:text-gray-700">
+                      Click here to upload item
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    name="uploadimage"
+                    accept="image/*"
+                    onChange={uploadImage}
+                    className="h-0 w-0"
+                  />
+                </label>
+              ) : (
+                <>
+                  <div className="relative h-full"></div>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

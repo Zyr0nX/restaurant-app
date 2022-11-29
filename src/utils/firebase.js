@@ -1,7 +1,11 @@
-import { EmailAuthCredential, getAuth, GoogleAuthProvider } from "firebase/auth";
+import {
+  EmailAuthCredential,
+  getAuth,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import firebase from 'firebase/compat/app';
+import firebase from "firebase/compat/app";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,12 +25,14 @@ const auth = getAuth(app);
 
 const firebaseUIConfig = {
   signInSuccessUrl: "/",
-  signInOptions: [new GoogleAuthProvider().providerId, new EmailAuthCredential().providerId],
-  tosUrl: '/',
+  signInOptions: [
+    new GoogleAuthProvider().providerId,
+    new EmailAuthCredential().providerId,
+  ],
+  tosUrl: "/",
   privacyPolicyUrl: function () {
-    window.location.assign('/');
-  }
+    window.location.assign("/");
+  },
 };
-
 
 export { app, firestore, storage, auth, firebaseUIConfig };
